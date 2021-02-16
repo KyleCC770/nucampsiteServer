@@ -182,6 +182,7 @@ campsiteRouter
         } else {
           err = new Error(`Comment ${req.params.commentId} not found`);
           err.status = 404;
+          next(err);
         }
       })
       .catch((err) => next(err));
@@ -197,7 +198,7 @@ campsiteRouter
       .then((campsite) => {
         if (campsite && campsite.comments.id(req.params.commentId)) {
           if (
-            campsite.comment
+            campsite.comments
               .id(req.params.commentId)
               .author._id.equals(req.user._id)
           ) {

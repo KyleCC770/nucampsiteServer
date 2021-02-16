@@ -19,7 +19,7 @@ promotionRouter
       .then((promotion) => {
         console.log("promotion Created", promotion);
         res.status = 200;
-        res.setHeader = ("Content-Type", "application/json");
+        res.setHeader("Content-Type", "application/json");
         res.json(promotion);
       })
       .catch((err) => next(err));
