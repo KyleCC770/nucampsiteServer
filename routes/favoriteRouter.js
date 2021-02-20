@@ -124,8 +124,19 @@ favoriteRouter
     authenticate.verifyUser,
     authenticate.verifyAdmin,
     (req, res, next) => {
-      Favorite.findOne(req.params.user._id).then((favorite => {
-        if (favorite) {
+      Favorite.findOne(req.params.user._id).then((fav) => {
+        if (fav) {
+          const index = indexOf(fav);
+          favorite.campsite.splice(index, 1);
+          favorite.save().then((favorite) => {
+            res.statusCode = 200;
+            res.setHeader("Content-Type", "application/json");
+            res.json(favorite);
+          });
+        } else {
+          err = new Error(`no favorites to delete`);
+          err.status = 403;
+          return next(err);
         }
       });
     }
